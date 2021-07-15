@@ -7,4 +7,4 @@
 
 # Messing in leetcode
 
-Currently random codes did on leetcode
+Currently random codes solved on leetcode
