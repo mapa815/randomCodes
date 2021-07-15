@@ -2,7 +2,7 @@
 
 # Contents
 
-1) Random changes for private codes
+1) Some commits involve sudden changes in past private codes
 2) messing in leetcode
 
 # Messing in leetcode
