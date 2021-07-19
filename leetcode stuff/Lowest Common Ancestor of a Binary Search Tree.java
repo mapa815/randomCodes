@@ -19,7 +19,19 @@ as the lowest node in T that has both p and q as descendants (where we allow a n
  */
 
 class Solution {
+    //three scenarios to check
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        
+        // 1st one is that if both p & q are smaller than the root then call the left subtree
+        if(p.val < root.val && q.val < root.val){
+            return lowestCommonAncestor(root.left,p,q);
+        }
+        // 2nd if both p & q are greter than the root then call the right subtree
+        else if(p.val > root.val && q.val > root.val){
+            return lowestCommonAncestor(root.right, p, q);
+        }
+        // 3rd is that we get our answer that is root :)
+        else{
+            return root;
+        }
     }
 }
