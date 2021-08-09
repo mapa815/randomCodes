@@ -9,3 +9,22 @@ It does not matter what you leave beyond the first k elements.
 Return k after placing the final result in the first k slots of nums.
 Do not allocate extra space for another array. You must do this by modifying the input array in-place with O(1) extra memory.
 */
+
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if (nums.length < 2) {
+			return nums.length;
+		}
+		int uniq = 0, curr = 1; 
+		while(curr < nums.length) {
+			if (nums[curr] != nums[uniq]) {
+				if (curr > uniq + 1) {
+					nums[uniq + 1] = nums[curr];
+				}
+				uniq++;
+			} 
+			curr++;
+		}
+		return uniq + 1;
+    }
+}
