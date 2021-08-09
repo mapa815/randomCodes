@@ -10,3 +10,15 @@ Return k after placing the final result in the first k slots of nums.
 Do not allocate extra space for another array. You must do this by modifying the input array in-place with O(1) extra memory.
 */
 
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        int o=0;
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]!=val){
+                nums[o]=nums[i];
+                o++;
+            }
+        }
+        return o;
+    }
+}
