@@ -41,3 +41,5 @@ In 2015-01-02, temperature was higher than the previous day (10 -> 25).
 In 2015-01-04, temperature was higher than the previous day (20 -> 30).
 */
 
+select w1.id from Weather w1, Weather w2
+where w1.Temperature  > w2.Temperature AND DATEDIFF(w1.recordDate,w2.recordDate)=1
