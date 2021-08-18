@@ -18,3 +18,41 @@ Input: nums1 = [1], m = 1, nums2 = [], n = 0
 Output: [1]
 Explanation: The arrays we are merging are [1] and [].
 */
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        if(n==0) return;
+        else if(m == 0){
+            for(int i = 0; i<nums2.length;i++)
+                nums1[i]=nums2[i];
+            return;
+        }
+	    int res[]= new int[m+n];
+	    int j=0,k=0,o=0;
+	    for(int i =0 ; i<nums1.length ;i++){
+	        if(j>=m||k>=n) break;
+	        if(nums1[j] < nums2[k] && j<m){
+	            o=i;
+	            res[i] = nums1[j];
+	            j++;
+	        }else {
+	            o=i;
+	            res[i] = nums2[k];
+	            k++;
+	        }
+	    }
+	    if(j<m && k>=n){    
+	        for(int i=o+1;i<res.length && j<m;i++){
+	            res[i] = nums1[j];
+	            j++;
+	        }
+	    }
+	    else if(k<n && j>=m){
+	        for(int i=o+1;i<res.length && k<n;i++){
+	            res[i] = nums2[k];
+	            k++;
+	        }
+	    }
+	    for(int i = 0; i<nums1.length;i++)
+	            nums1[i]=res[i];
+    }
+}
