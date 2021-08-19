@@ -16,3 +16,35 @@ Input: head = [1,2], pos = 0
 Output: true
 Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
 */
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        ListNode slow = head;   // starting my runners both at same position.
+        ListNode fast = head;   // starting my runners both at same position.
+    
+        // While fast and fast's next (fast.next) doesn't   equal null keep looping.
+        while (fast != null && fast.next != null) { 
+      
+       // assign slow to it's next value (slow.next) 
+            slow = slow.next;      
+      // assigning fast to next next. Because it's movie in steps of two rather one like slow is.
+            fast = fast.next.next; 
+            
+      if (fast == slow) {  // if at some point fast and slow equal each other than we have a cycle.
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
