@@ -24,3 +24,25 @@ Example 3:
 Input: n = 2
 Output: true
 */
+public boolean canWinNim(int n) {
+    return !(n%4 == 0);
+    // *HOW TO FIND THE PATTERN*
+    // Notice, if I can send my opponent to a 'losing' position
+    // then I can win. A 'losing' position is defined 
+    // as a poition where any move I make results in a 'winning' position for the opponent
+    
+    // 1 ->    win ( i can take 1 and win)
+    // 2 ->    win ( i can take 2 and win)
+    // 3 ->    win ( i can take 3 and win)
+    // 4 ->    lose (i can only send the second player to a winning position 1,2 or 3)
+    // 5 ->    win (i can take 1 and send my opponent to 4, a losing position)
+    // 6 ->    win (i can take 2 and send my opponent to 4, a losing position)
+    // 7 ->    win ( i can take 3 and send my opponent to 4, a losing position)
+    // 8 ->    lose ( if i take 1, 2 or 3, my opponent moves to a winning position)
+    //          ....apply the above logic till we see a pattern....
+    // 9 ->    win
+    // 10 ->   win
+    // 11  ->  win
+    // 12  ->  lose
+    // ....etc. etc. it looks like if n is a multiple of 4 we lose
+}
