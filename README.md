@@ -1,6 +1,8 @@
 # randomCodes
 
 # Contents
+1) Random problems solved in leetcode
+2) Aux file for other future codes
 
 # Leetcode Stuff
 
