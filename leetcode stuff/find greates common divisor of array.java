@@ -26,3 +26,18 @@ The smallest number in nums is 3.
 The largest number in nums is 3.
 The greatest common divisor of 3 and 3 is 3.
 */
+class Solution {
+    public int findGCD(int[] nums) {
+        Arrays.sort(nums);
+        int i1 = nums[0];
+        int i2 = nums[nums.length-1];
+        
+        int gcd = 1;
+        
+        for(int i=1; i<=i1 && i<=i2; i++){
+            if(i1%i == 0 && i2%i == 0)
+                gcd = i;
+        }
+        return gcd;
+    }
+}
