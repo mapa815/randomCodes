@@ -13,3 +13,51 @@ One element (red) is removed from the input data and inserted in-place into the 
 Input: head = [-1,5,3,4,0]
 Output: [-1,0,3,4,5]
 */
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode insertionSortList(ListNode head) {
+        if(head==null || head.next==null) return head;
+        
+        int count=1;
+        ListNode temp=head;
+        while(temp!=null){
+            temp=temp.next;
+            count++;
+        }
+        
+        int [] arr=new int[count-1];
+        temp=head;
+        for(int i=0;i<count-1;i++){
+            arr[i]=temp.val;
+            temp=temp.next;
+        }
+        
+        for(int i=1;i<count-1;i++){
+            int key=arr[i];
+            int j=i-1;
+            while(j>=0 && arr[j]>key){
+                arr[j+1]=arr[j];
+                j--;
+            }
+            arr[j+1]=key;
+        }
+        ListNode newHead=new ListNode(arr[0]);
+        ListNode trav=newHead;
+        int i=1;
+        while(count-1>i){
+            trav.next=new ListNode(arr[i]);
+            trav=trav.next;
+            i++;
+        }
+        return newHead;
+    }
+}
