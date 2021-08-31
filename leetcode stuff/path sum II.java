@@ -16,3 +16,37 @@ Example 2:
 Input: root = [1,2,3], targetSum = 5
 Output: []
 */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void pathSumHelper(TreeNode root,int targetSum,List<List<Integer>> ans,ArrayList<Integer> lst){
+      if(root==null) return;
+      
+      lst.add(root.val);
+      if(targetSum-root.val==0 && root.left==null && root.right==null) ans.add(new ArrayList<>(lst));
+      pathSumHelper(root.left,targetSum-root.val,ans,lst);
+      pathSumHelper(root.right,targetSum-root.val,ans,lst);
+      lst.remove(lst.size()-1);
+      
+  }
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        List<List<Integer>> ans=new ArrayList<>();
+    
+        pathSumHelper(root,targetSum,ans,new ArrayList<Integer>());
+    
+        return ans;
+    }
+}
