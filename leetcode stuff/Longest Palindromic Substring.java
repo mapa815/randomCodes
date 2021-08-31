@@ -19,27 +19,21 @@ Output: "a"
 */
 class Solution {
     public String longestPalindrome(String str) {
-        
-
-		int lps[] = manchers(str);
-		int ind =0;
-		int max = -1;
-		for(int i=2;i<lps.length;i++) {
-			if(lps[i]>max) {
-				max = lps[i];
-				ind  = i; 
-			}
+	int lps[] = manchers(str);
+	int ind =0;
+	int max = -1;
+	for(int i=2;i<lps.length;i++) {
+		if(lps[i]>max) {
+			max = lps[i];
+			ind  = i; 
 		}
-		
-		int aind = ind-max+1;
-		int find = (aind-2)/2;
-		return(str.substring(find,find+max));
-        
+	}
+	int aind = ind-max+1;
+	int find = (aind-2)/2;
+	return(str.substring(find,find+max));
     }
-    
-    
-    	public static int[] manchers(String str) {
-		
+
+	public static int[] manchers(String str) {
 		StringBuilder sb = new StringBuilder("@#");
 		int n = str.length();
 		for(int i=0;i<n;i++) {
@@ -61,11 +55,6 @@ class Solution {
 				rad = lps[i]+i;
 			}
 		}
-		
 		return lps;
-		
-		
 	}
-    
-    
 }
