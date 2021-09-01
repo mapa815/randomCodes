@@ -22,3 +22,20 @@ Example 3:
 Input: neededApples = 1000000000
 Output: 5040
 */
+class Solution {
+    public long minimumPerimeter(long n) {
+        
+        long side = 1;
+        long count;
+        while(n > 0) {
+            count = 12 * side * side;
+            if (count >= n)
+                break;
+            n = n-count;
+            side++;
+        }
+        //side of the square will be 2 * side as we have to draw square on both side of 0,0 and parameter is 4 * 2 * side.
+        return 8 * side;
+        
+    }
+}
