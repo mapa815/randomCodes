@@ -22,3 +22,39 @@ Example 5:
 Input: nums1 = [2], nums2 = []
 Output: 2.00000
 */
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int len = nums1.length+nums2.length; 
+        int num1=0; int num2=0; 
+        int p1=0; int p2=0; 
+        int count=0;  //number of elements that have been sorted
+        while(p1<nums1.length && p2<nums2.length && count<(1+len/2)){ 
+            num1=num2;
+            if(nums1[p1]<=nums2[p2]) {
+                num2=nums1[p1];
+                p1++;
+            }
+            else {
+                num2=nums2[p2];
+                p2++;
+            }
+            count++;
+        }
+        
+        while(count<(1+len/2)){
+            num1=num2;
+            if(p1<nums1.length) {
+                num2=nums1[p1];
+                p1++;
+            }
+            else{
+                num2=nums2[p2];
+                p2++;
+            }
+            count++;
+        }
+        
+        if(len%2==0) return (num1+(double)num2)/2;
+        else return (double)num2;
+    }
+}
