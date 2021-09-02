@@ -28,3 +28,90 @@ lRUCache.get(1);    // return -1 (not found)
 lRUCache.get(3);    // return 3
 lRUCache.get(4);    // return 4
 */
+class LRUCache {
+    private Map<Integer, ListNode> nodes;
+    private int capacity = 0;
+    private ListNode head;
+    private ListNode tail;
+    
+    public LRUCache(int capacity) {
+        this.nodes = new HashMap();
+        this.capacity = capacity;
+        this.head = new ListNode(-1, -1);
+        this.tail = new ListNode(-1, -1, head, null);
+        head.next = this.tail;
+    }
+    
+    public int get(int key) {
+        if(this.nodes.containsKey(key)) {
+            ListNode node = this.nodes.get(key);
+            
+            this.moveToHead(node);
+            
+            return node.val;
+        } else {
+            return -1;
+        }
+    }
+    
+    public void put(int key, int value) {
+        if(this.nodes.containsKey(key)) {
+            ListNode node = this.nodes.get(key);
+            node.val = value;
+            
+            this.moveToHead(node);
+        } else {
+            if(this.nodes.size() == this.capacity) {
+                this.nodes.remove(this.tail.prev.key);
+                
+                this.tail.prev.prev.next = tail;
+                tail.prev = this.tail.prev.prev;
+            }
+            
+            ListNode node = new ListNode(key, value, this.head, this.head.next);
+                
+            this.head.next.prev = node;
+            this.head.next = node;
+            
+            this.nodes.put(key, node);
+        }
+    }
+    
+    private void moveToHead(ListNode node) {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+
+        node.prev = this.head;
+        node.next = this.head.next;
+
+        this.head.next.prev = node;
+
+        this.head.next = node;
+    }
+    
+    private class ListNode {
+        public int val;
+        public int key;
+        public ListNode next = null;
+        public ListNode prev = null;
+        
+        public ListNode(int key, int val) {
+            this.key = key;
+            this.val = val;
+        }
+        
+        public ListNode(int key, int val, ListNode prev, ListNode next) {
+            this.key = key;
+            this.val = val;
+            this.prev = prev;
+            this.next = next;
+        }
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
