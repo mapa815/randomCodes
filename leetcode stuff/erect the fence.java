@@ -40,3 +40,51 @@ This is done by calculating the distance between the collinear points.
 
 Time Complexity: O(n*h), Where n = Total number of points, h = total number of points on boundary
 */
+public int crossProduct(int[] p, int[] q, int[] r) {
+	return (q[1] - p[1]) * (r[0] - q[0]) - (q[0] - p[0]) * (r[1] - q[1]);
+}
+
+public boolean distance(int[] p, int[] i, int[] q) {
+	boolean a = i[0] >= p[0] && i[0] <= q[0] || i[0] <= p[0] && i[0] >= q[0];
+	boolean b = i[1] >= p[1] && i[1] <= q[1] || i[1] <= p[1] && i[1] >= q[1];
+	return a && b;
+}
+
+public int[][] outerTrees(int[][] points) {
+	//use set because this algorithm might try to insert duplicate point.
+	HashSet<int[]> set = new HashSet<> ();
+	if (points.length < 4) {
+		for (int[] p: points)
+			set.add(p);
+		return set.toArray(new int[set.size()][]);
+	}
+	int left_most = 0;
+	for (int i = 0; i < points.length; i++)
+		if (points[i][0] < points[left_most][0])
+			left_most = i;
+			
+	//first find leftmost point to start the march.
+	int p = left_most;
+	do {
+		int q = (p + 1) % points.length;
+
+		for (int i = 0; i < points.length; i++) {
+			//if crossProduct < 0 it means points[i] is on right of current point -> nextPoint. Make him the next point.
+			if (crossProduct(points[p], points[i], points[q]) < 0) {
+				q = i;
+			}
+		}
+
+		for (int i = 0; i < points.length; i++) {
+			if (i != p && i != q && crossProduct(points[p], points[i], points[q]) == 0 && distance(points[p], points[i], points[q])) {
+				// if more than one points are on the rightmost, then insert all the collinear points in the set
+				set.add(points[i]);
+			}
+		}
+
+		set.add(points[q]);
+		p = q;
+	}
+	while (p != left_most);
+	return set.toArray(new int[set.size()][]);
+}
