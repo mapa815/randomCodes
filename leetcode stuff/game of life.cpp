@@ -19,3 +19,57 @@ Example 2:
 Input: board = [[1,1],[1,0]]
 Output: [[1,1],[1,1]]
 */
+class Solution {
+public:
+    void gameOfLife(vector<vector<int>>& grid) 
+    {
+     vector<pair<int, int>>dis ={{-1,0},{1,0},{0,-1},{0,1},{-1,-1},{-1,1},{1,-1},{1,1}};
+     int i,j,k, cd, ca;
+     int m = grid.size();
+     int n = grid[0].size();
+
+     for(int i = 0; i <m;i++)
+     {
+       for(int j = 0; j <n;j++)
+       {
+           cd = 0;
+           ca = 0;
+          for(k=0;k<dis.size();k++)
+          {
+            int u = dis[k].first;
+            int v = dis[k].second;
+
+            int ni = i+u;
+            int nj = j+v;
+             
+            if(ni<0 || nj<0 || ni>=m || nj>=n)
+              continue;
+
+              if(grid[ni][nj]&1) 
+                  ca++;              
+          }
+           if( (grid[i][j]&1)  && ca < 2) // under-population
+                 grid[i][j] = 1; // 1 => (0 1)
+             
+             else if( (grid[i][j]&1) && ca > 3) // over-population
+             grid[i][j] = 1;    // 1 => (0 1)
+			 
+             else if( (grid[i][j]&1) && (ca == 2 || ca == 3))  // live next generation
+             grid[i][j] = 3;   // 3 (1 1) 
+			 
+			 else if( !(grid[i][j]&1)  && ca == 3) //  reproduction
+             grid[i][j] = 2;  // 2 => (1 0)
+    
+   }
+
+  }
+        
+      for(int i = 0; i<m;i++)
+     {
+       for(int j = 0; j<n;j++)
+       {
+           grid[i][j] = grid[i][j] >> 1;
+       }
+      }
+}
+};
