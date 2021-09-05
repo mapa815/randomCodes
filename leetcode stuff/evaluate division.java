@@ -22,3 +22,59 @@ Example 3:
 Input: equations = [["a","b"]], values = [0.5], queries = [["a","b"],["b","a"],["a","c"],["x","y"]]
 Output: [0.50000,2.00000,-1.00000,-1.00000]
 */
+class Solution {
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        Map<String,List<Node>> graph = buildGraph(equations,values);
+        
+        double[] result = new double[queries.size()];
+        
+        for(int i=0;i<queries.size();i++){
+            result[i] = dfs(queries.get(i).get(0),queries.get(i).get(1),new HashSet<>(),graph);
+        }
+        
+        return result;
+    }
+    
+    public double dfs(String src, String dest, Set<String> visited, Map<String,List<Node>> graph){
+        
+        if(!(graph.containsKey(src) && graph.containsKey(dest))){
+            return -1.0;
+        }
+         if(src.equals(dest)){
+             return 1.0;
+         }
+           visited.add(src);
+         for(Node node: graph.get(src)){             
+             if(!visited.contains(node.key)){
+                 double ans =dfs(node.key,dest,visited,graph);
+                 if(ans!=-1.0){
+                     return ans*node.value;
+                 }
+             }
+         }  
+         return -1.0;
+    }
+    
+    public Map<String,List<Node>> buildGraph(List<List<String>> equations,double[] val){
+        Map<String,List<Node>> graph = new HashMap<>();
+        for(int i=0;i<val.length;i++){
+            String src = equations.get(i).get(0);
+            String dest = equations.get(i).get(1);
+            graph.putIfAbsent(src,new ArrayList<>());
+            graph.putIfAbsent(dest,new ArrayList<>());
+            graph.get(src).add(new Node(dest,val[i]));
+            graph.get(dest).add(new Node(src,1/val[i]));
+        }
+        return graph;
+    }
+    
+    static class Node{
+        String key;
+        double value;
+        
+        public Node(String key,double value){
+            this.key = key;
+            this.value = value;
+        }
+    }
+}
