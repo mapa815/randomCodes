@@ -26,3 +26,18 @@ Example 3:
 Input: nums = [1,2,3,4,5,6,7,8,9]
 Output: 2
 */
+class Solution {
+  public int wiggleMaxLength(int[] nums) {
+    if(nums.length < 2) return nums.length;    
+    int i = 1, count = 1;    
+    int diff = nums[i] - nums[i - 1];    
+    while(i < nums.length) {
+      if((nums[i] > nums[i - 1] && diff >= 0) || (nums[i] < nums[i - 1] && diff <= 0)){
+        count++;
+        diff = nums[i - 1] - nums[i];
+      }
+      i++;
+    }
+    return count;
+  }
+}
