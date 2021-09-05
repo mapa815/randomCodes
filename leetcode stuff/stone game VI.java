@@ -41,3 +41,46 @@ Regardless of how Alice plays, Bob will be able to have more points than Alice.
 For example, if Alice takes stone 1, Bob can take stone 2, and Alice takes stone 0, Alice will have 6 points to Bob's 7.
 Bob wins.
 */
+class Solution {
+    public int stoneGameVI(int[] aliceValues, int[] bobValues) {
+        //the max of aliceValues[i] + bobValues[i] is the most optimal move 
+        TreeMap<Integer, ArrayList<Integer>> map = new TreeMap<>();
+        ArrayList<Integer> a;
+        //here score is aliceValues[i] + bobValues[i]. Score as key and index as value. Put them
+        //into tree map
+        int score = 0;
+        for (int i=0; i<aliceValues.length; i++) {
+            score = aliceValues[i]  + bobValues[i];
+           
+            if (map.containsKey(score)) {
+                a = map.get(score);
+               
+            } else {
+                a = new ArrayList<>();
+            }
+            a.add(i);
+            map.put(score, a);
+        }
+        //use turn to decide if it is alice's move
+        int turn = 0;
+        int aScore = 0;
+        int bScore = 0;
+
+        for (int k: map.descendingKeySet()) {
+            a = map.get(k);
+            
+            for (int i=0; i<a.size(); i++) {
+                turn++;
+                
+                if (turn%2 !=0) {
+                    //alice turn
+                    aScore = aScore + aliceValues[a.get(i)];
+                } else {
+                    //bob turn
+                    bScore = bScore + bobValues[a.get(i)];
+                }
+            }
+        }
+        return aScore==bScore ? 0 : (aScore > bScore ? 1: -1);
+    }
+}
