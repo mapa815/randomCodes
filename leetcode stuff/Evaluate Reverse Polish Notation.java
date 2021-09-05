@@ -16,3 +16,35 @@ Input: tokens = ["4","13","5","/","+"]
 Output: 6
 Explanation: (4 + (13 / 5)) = 6
 */
+// Stack Solution
+// Time Complexity O(n)
+// Space Complexity O(n)
+
+class Solution {
+    public int evalRPN(String[] tokens) {
+        
+        int toPush, second;
+        Stack<Integer> numStack = new Stack<Integer>();
+        
+        for (int i=0; i<tokens.length; i++) 
+        {    
+            switch (tokens[i]) {
+                case "+": toPush = numStack.pop() + numStack.pop();
+                    break;
+                case "*": toPush = numStack.pop() * numStack.pop();
+                    break;
+                case "-":
+                    second = numStack.pop();
+                    toPush = numStack.pop() - second;
+                    break;
+                case "/": 
+                    second = numStack.pop();
+                    toPush = numStack.pop() / second;
+                    break;
+                default:  toPush = Integer.parseInt(tokens[i]);
+            }
+            numStack.push(toPush);
+        }
+        return numStack.pop();
+    }
+}
