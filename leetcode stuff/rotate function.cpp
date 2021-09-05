@@ -22,3 +22,18 @@ Example 2:
 Input: nums = [100]
 Output: 0
 */
+class Solution {
+public:
+    int maxRotateFunction(vector<int>& nums) {
+        int i, sum_nums=0, r=0, max_r;
+        for(i=0; i<nums.size(); i++) {
+            sum_nums+=nums[i];
+            r+=(nums[i]*i);
+        }
+        for(max_r=r, i=nums.size()-1; i>=0; i--) {
+            r+=(sum_nums-nums.size()*nums[i]);
+            if(max_r<r) max_r=r;
+        }
+        return max_r;
+    }
+};
