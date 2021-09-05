@@ -12,3 +12,29 @@ Input: s = "ababbc", k = 2
 Output: 5
 Explanation: The longest substring is "ababb", as 'a' is repeated 2 times and 'b' is repeated 3 times.
 */
+class Solution {
+public:
+    int longestSubstring(string s, int k) {
+        int n=s.size(),f=0;
+        map<char,int> m;
+        for(int i=0;i<n;i++){
+         m[s[i]]++;
+        }
+        bool a[26]={0};
+        a[0]=0;
+        for(auto i:m)
+        {
+            if(i.second<k){a[i.first-'a']=1;f=1;}
+        }
+        if(f==0)return n;
+        int j=0,i,ans=0;
+        for( i=0;i<n;i++)
+        {
+            if(a[s[i]-97]==1)
+            {   
+                ans=max(ans,longestSubstring(s.substr(j,i-j),k));j=i+1;
+            }
+        }
+        return ans=max(ans,longestSubstring(s.substr(j,i-j),k));
+    }
+};
