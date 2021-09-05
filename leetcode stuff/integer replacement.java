@@ -20,3 +20,23 @@ Example 3:
 Input: n = 4
 Output: 2
 */
+class Solution {
+    public int integerReplacement(int n) {
+        int count = 0;
+        long x = (long)n;
+        while(x != 1) {
+            // System.out.println(x +" " + (count + 1));
+            if (x % 2 == 0) {
+                x /= 2;
+            } else {
+                if (((x-1) / 2) % 2 == 0 || ((x-1) / 2) == 1) {
+                    x = x - 1;
+                } else {
+                    x = x + 1;
+                }
+            }
+            count++;
+        }
+        return count;
+    }
+}
