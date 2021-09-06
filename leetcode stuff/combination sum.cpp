@@ -32,3 +32,26 @@ Example 5:
 Input: candidates = [1], target = 2
 Output: [[1,1]]
 */
+class Solution {
+public:
+    vector<vector<int>>ans;
+    void solve(vector<int>&v, vector<int>&tmp, int target, int ind){
+        if(target<0) return;
+        if(!target){
+            ans.push_back(tmp);
+            return;
+        }
+        for(int i=ind;i<v.size();i++){
+            tmp.push_back(v[i]);
+            solve(v,tmp,target-v[i],i);
+            tmp.pop_back();
+        }
+        return;
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int>tmp;
+        sort(candidates.begin(), candidates.end());
+        solve(candidates, tmp, target, 0);
+        return ans;
+    }
+};
