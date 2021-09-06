@@ -23,3 +23,27 @@ Output:
 [5]
 ]
 */
+class Solution {
+public:
+    void backTrack(vector<int>& candidates, int start, int remain,
+                   vector<int> combination, vector<vector<int>>& res) {
+        if (remain == 0) {
+            res.push_back(combination);
+            return;
+        }
+        for (int i = start; i < candidates.size(); i++) {
+            if (remain < candidates[i]) break;
+            if (i > start && candidates[i] == candidates[i - 1]) continue;
+            combination.push_back(candidates[i]);
+            backTrack(candidates, i + 1, remain - candidates[i], combination, res);
+            combination.pop_back();
+        }
+    }
+    
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>> res;
+        sort(candidates.begin(), candidates.end());
+        backTrack(candidates,0, target, {}, res);
+        return res;
+    }
+};
