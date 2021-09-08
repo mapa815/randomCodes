@@ -20,3 +20,25 @@ Example 3:
 Input: nums = [7,7,7,7,7,7,7]
 Output: 1
 */
+class Solution {
+public:
+    int dp[2502];
+    int solve(vector<int>& nums, int prev, int idx){
+        if(idx==nums.size()) return 0;
+        if(dp[idx] != -1) return dp[idx];
+
+        int curSum = 0, maxSum = 0;
+        for(int i=idx; i<nums.size(); ++i){
+            if(nums[i]>prev){
+                curSum=max(1+solve(nums,nums[i],i+1), solve(nums,prev,i+1));
+            }
+            maxSum = max(maxSum,curSum);
+        }
+        return dp[idx] = maxSum;
+    }
+    
+    int lengthOfLIS(vector<int>& nums) {
+        memset(dp,-1,sizeof(dp));
+        return solve(nums,INT_MIN,0);
+    }
+};
