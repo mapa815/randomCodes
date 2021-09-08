@@ -35,3 +35,34 @@ Explanation: It can be proven that Bob will always win. One possible outcome is:
 - Bob replaces the last '?' in the right half with '7'. num = "93295927".
 Bob wins because 9 + 3 + 2 + 9 = 5 + 9 + 2 + 7.
 */
+class Solution {
+    public boolean sumGame(String num) {
+        int leftSum = 0, rightSum = 0, qLeft = 0, qRight = 0, n = num.length(), turn = 0;
+        for(int i = 0; i < n / 2; i++){
+            char ch = num.charAt(i);
+            if(ch == '?')
+                qLeft++;
+            else
+                leftSum += (ch - '0');
+        }
+        for(int i = n / 2; i < n; i++){
+            char ch = num.charAt(i);
+            if(ch == '?')
+                qRight++;
+            else
+                rightSum += (ch - '0');
+        }
+        if(qLeft + qRight == 0) return leftSum != rightSum;
+        if((qLeft + qRight) % 2 == 1) return true;
+        int min = Math.min(qLeft, qRight);
+        qLeft -= min;
+        qRight -= min;
+        if(qLeft > 0){
+            if(leftSum > rightSum) return true;
+            return rightSum - leftSum != 9 * (qLeft / 2);
+        } else{
+            if(leftSum < rightSum) return true;
+            return leftSum - rightSum != 9 * (qRight / 2);
+        }
+    }
+}
