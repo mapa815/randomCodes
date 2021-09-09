@@ -21,3 +21,8 @@ Example 2:
 Input: n = 1
 Output: 1
 */
+class Solution {
+	public int lastRemaining(int n) {
+		return n==1?1:2*(n/2-lastRemaining(n/2)+1);
+	}
+}
