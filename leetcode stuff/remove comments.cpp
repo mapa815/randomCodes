@@ -58,3 +58,48 @@ Explanation: The original source string is "a/*comment\nline\nmore_comment*/b", 
   After deletion, the implicit newline characters are deleted, leaving the string "ab", which when delimited by newline characters becomes ["ab"].
 */
   
+class Solution {
+public:
+    vector<string> removeComments(vector<string>& source) {
+        vector<string> ans;
+        bool isInBlock = false;
+        string blockString = "";
+
+        for (auto line : source) {
+            while (true) {
+                if (isInBlock) {
+                    int endIdx = line.find("*/");
+                    if (endIdx == -1) break;
+                    line = line.substr(endIdx + 2);
+                    isInBlock = false;
+                } else {
+                    int lineCommentIdx = line.find("//");
+                    int startIdx = line.find("/*");
+                    if (lineCommentIdx == -1 && startIdx == -1) break;
+                    lineCommentIdx = lineCommentIdx == -1 ? INT_MAX : lineCommentIdx;
+                    startIdx = startIdx == -1 ? INT_MAX : startIdx;
+                    
+                    if (lineCommentIdx < startIdx) {
+                        line = line.substr(0, lineCommentIdx);
+                    } else {
+                        isInBlock = true;
+                        blockString += line.substr(0, startIdx);
+                        line = line.erase(startIdx, 2);
+                        int endIdx = line.find("*/", startIdx);
+                        if (endIdx != -1) {
+                            isInBlock = false;
+                            line = line.substr(endIdx + 2);
+                        }
+                    }
+                }
+            }
+            if (!isInBlock && (
+                line.size() || blockString.size()
+            )) {
+                ans.push_back(blockString+line);
+                blockString.clear();
+            }
+        }
+        return ans;
+    }
+};
