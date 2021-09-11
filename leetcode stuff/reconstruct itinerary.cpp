@@ -20,3 +20,27 @@ Input: tickets = [["JFK","SFO"],["JFK","ATL"],["SFO","ATL"],["ATL","JFK"],["ATL"
 Output: ["JFK","ATL","JFK","SFO","ATL","SFO"]
 Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"] but it is larger in lexical order.
 */
+class Solution {
+public:
+    vector<string> ans;
+    
+    void solve(string curNode, unordered_map<string, priority_queue<string,vector<string>,greater<string>>> &graph){
+        priority_queue<string,vector<string>,greater<string>> &pq = graph[curNode];
+        while(!pq.empty()){
+            string childNode = pq.top();
+            pq.pop();
+            solve(childNode, graph);
+        }
+        ans.insert(ans.begin()+0,curNode);
+        return;
+    }
+    
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        unordered_map<string, priority_queue<string,vector<string>,greater<string>>> graph;
+        for(auto &t : tickets){
+            graph[t[0]].push(t[1]);
+        }
+        solve("JFK",graph);
+        return ans;
+    }
+};
