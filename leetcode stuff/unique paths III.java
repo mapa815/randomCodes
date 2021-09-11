@@ -34,3 +34,50 @@ Output: 0
 Explanation: There is no path that walks over every empty square exactly once.
 Note that the starting and ending square can be anywhere in the grid.
 */
+class Solution {
+    int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    private int dfs(int i, int j, int[][] grid, int steps, int totalSteps) {
+        if(i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == -1 || grid[i][j] == 3) {
+            return 0;
+        }
+        if(grid[i][j] == 2) {
+            if(steps == totalSteps) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } 
+        grid[i][j] = 3;
+        int count = 0;
+        for(int[] dir : dirs) {
+            count += dfs(i+dir[0], j+dir[1], grid, steps+1, totalSteps);
+        }
+        grid[i][j] = 0;
+        return count;
+    }
+    
+    public int uniquePathsIII(int[][] grid) {
+        int row = grid.length;
+        int col = grid[0].length;
+        //int[][] memo = new int[row][col];
+        //Arrays.fill(memo, -1);
+        int obstacle = 0;
+        for(int i = 0; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                if(grid[i][j] == -1) {
+                    obstacle += 1;
+                }
+            }
+        }
+        
+        for(int i = 0; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                if(grid[i][j] == 1) {
+                    int steps = 1;
+                    return dfs(i, j, grid, steps, row*col-obstacle);
+                }
+            }
+        }
+        return 0;
+    }
+}
