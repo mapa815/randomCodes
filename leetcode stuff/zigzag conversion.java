@@ -29,3 +29,23 @@ Example 3:
 Input: s = "A", numRows = 1
 Output: "A"
 */
+class Solution {
+    public String convert(String s, int numRows) {
+        if (numRows == 0 || numRows == 1) {
+			return s;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < numRows; i++) {
+            int j = i;
+            while (j < s.length()) {
+                sb.append(s.charAt(j));
+                j += 2 * numRows - 2;
+                int k = j - 2 * i;
+                if (i != numRows - 1 && i != 0 && k < s.length()) {
+                    sb.append(s.charAt(k));
+                }
+            }
+        }
+        return sb.toString();
+    }
+}
