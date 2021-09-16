@@ -26,3 +26,23 @@ Example 4:
 Input: height = [1,2,1]
 Output: 2
 */
+class Solution {
+    public int maxArea(int[] height) {
+        
+        int area = 0, size = height.length;
+        int leftPtr = 0, rightPtr = size - 1;
+        
+        while(leftPtr < rightPtr) {
+            int distance = rightPtr - leftPtr;
+            if(height[leftPtr] < height[rightPtr]) {
+                area = Math.max(area, height[leftPtr] * distance);
+                leftPtr++;
+            } else {
+                area = Math.max(area, height[rightPtr] * distance);
+                rightPtr--;
+            }
+        }
+        
+        return area;
+    }
+}
