@@ -49,3 +49,50 @@ Input: num = 1994
 Output: "MCMXCIV"
 Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
 */
+class Solution {
+    public static char romanCharacter(int x) {
+        switch (x) {
+            case 1:
+                return 'I';
+            case 5:
+                return 'V';
+            case 10:
+                return 'X';
+            case 50:
+                return 'L';
+            case 100:
+                return 'C';
+            case 500:
+                return 'D';
+            default:
+                return 'M';
+        }
+    }
+    
+    public String intToRoman(int n) {
+        StringBuilder sb = new StringBuilder();
+        int[] arr = {1, 5, 10, 50, 100, 500, 1000};
+        for (int i = 6; i >= 0; i--){
+            if (n >= arr[i]) {
+                int temp = n / arr[i];
+                n %= arr[i];
+                while (temp --> 0) {
+                    sb.append(romanCharacter(arr[i]));
+                }
+            }
+            if (n < arr[i] && i > 0 && arr[i] == 5 * arr[i-1]) {
+                if (n / arr[i-1] == 4) {
+                    n %= arr[i-1];
+                    sb.append(romanCharacter(arr[i-1])).append(romanCharacter(arr[i]));
+                }
+            }
+            if (n < arr[i] && i > 1 && arr[i] == 2 * arr[i-1]) {
+                if (n / arr[i-2] == 9) {
+                    n %= arr[i-2];
+                    sb.append(romanCharacter(arr[i-2])).append(romanCharacter(arr[i]));
+                }
+            }
+        }
+        return sb.toString();
+    }
+}
