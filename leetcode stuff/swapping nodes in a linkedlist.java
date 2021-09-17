@@ -29,3 +29,50 @@ Example 5:
 Input: head = [1,2,3], k = 2
 Output: [1,2,3]
 */
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode swapNodes(ListNode head, int k)
+    {
+        if(head==null || head.next==null) return head;
+
+        ListNode temp=head;
+        int count=1;
+        ListNode f=null;
+        ListNode l=null;
+        while(temp!=null)
+        {
+            temp=temp.next;
+            count++;
+        }
+        int last=count-k;
+        count=1;
+        temp=head;
+        while(temp!=null)
+        {
+            if(count==k)
+            {
+               f=temp;
+            }
+            if(count==last)
+            {
+               l=temp;
+
+            }
+            temp=temp.next;
+            count++;
+        }
+        count=f.val;
+        f.val=l.val;
+        l.val=count;
+        return head;
+    }
+}
