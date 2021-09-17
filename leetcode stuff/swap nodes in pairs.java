@@ -19,3 +19,41 @@ Example 3:
 Input: head = [1]
 Output: [1]
 */
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+public class Solution {
+    public ListNode swapPairs(ListNode A) {
+        if(A== null || A.next == null)
+            return A;
+        ListNode tmp = A;
+        ListNode p1 = A;
+        ListNode p2 = A.next;
+        ListNode start = p2;
+        ListNode prev = null;
+        while(true)
+        {
+            ListNode next = p2.next;
+            p1.next = next;
+            p2.next = p1;
+            if(prev!=null)
+                prev.next = p2;
+            prev = p1;
+            p1 = next;
+            if(p1 == null)
+                break;
+            p2 = p1.next;
+            if(p2 == null)
+                break;
+        }
+        
+        return start;
+    }
+}
