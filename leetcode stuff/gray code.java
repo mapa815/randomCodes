@@ -30,3 +30,34 @@ Example 2:
 Input: n = 1
 Output: [0,1]
 */
+class Solution {
+    public List<Integer> grayCode(int n) {
+        List<Integer> list=new ArrayList<Integer>();
+
+        List<String> binary=new ArrayList<String>();
+
+        binary.add("0");
+        binary.add("1");
+
+        for(int i=2;i<=n;i++){
+            int size=binary.size();
+            boolean flag=false;
+            for(int j=0;j<size;j++){
+                String code=binary.remove(0);
+                if(flag){
+                    binary.add(code+"1");
+                    binary.add(code+"0");
+                    flag=false;
+                }else{
+                    binary.add(code+"0");
+                    binary.add(code+"1");
+                    flag=true;
+                }
+            }
+        }
+        for(int i=0;i<binary.size();i++){
+            list.add(Integer.parseInt(binary.get(i),2));
+        }
+        return list;
+    }
+}
