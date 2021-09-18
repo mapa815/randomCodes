@@ -24,3 +24,8 @@ Example 3:
 Input: n = 1
 Output: 1
 */
+public class Solution {
+    public int bulbSwitch(int n) {
+        return (int)Math.sqrt(n);
+    }
+}
